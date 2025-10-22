@@ -1,0 +1,28 @@
+services:
+  elog:
+    build:
+      context: .
+      network: host
+    container_name: elog-daemon
+    network_mode: host
+    volumes:
+      - ./elog-data:/var/elog/logbooks
+      - ./elog-config:/etc/elog
+    restart: unless-stopped
+    environment:
+      - TZ=America/Denver
+
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: elog-nginx
+  #   network_mode: host
+  #   volumes:
+  #     - ./nginx-host.conf:/etc/nginx/nginx.conf:ro
+  #     - ./htpasswd:/etc/nginx/.htpasswd:ro
+  #   depends_on:
+  #     - elog
+  #   restart: unless-stopped
+
+volumes:
+  elog-data:
+  elog-config:
